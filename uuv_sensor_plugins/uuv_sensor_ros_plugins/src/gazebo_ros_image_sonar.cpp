@@ -31,24 +31,7 @@
  *
  */
 
-#include <algorithm>
-#include <assert.h>
-#include <boost/thread/thread.hpp>
-#include <boost/bind.hpp>
-
-//#include <smarc_gazebo_ros_plugins/gazebo_ros_image_sonar.h>
 #include <uuv_sensor_ros_plugins/gazebo_ros_image_sonar.hh>
-#include <gazebo/sensors/Sensor.hh>
-#include <sdf/sdf.hh>
-#include <gazebo/sensors/SensorTypes.hh>
-
-#include <sensor_msgs/point_cloud2_iterator.h>
-
-#include <tf/tf.h>
-
-#include <sensor_msgs/image_encodings.h>
-#include <cv_bridge/cv_bridge.h>
-#include <opencv2/core/core.hpp>
 
 namespace gazebo
 {
