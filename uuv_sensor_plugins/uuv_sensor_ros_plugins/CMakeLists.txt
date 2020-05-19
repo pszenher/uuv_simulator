@@ -65,7 +65,7 @@ catkin_package(
     uuv_gazebo_ros_imu_plugin
     uuv_gazebo_ros_rpt_plugin
     uuv_gazebo_ros_camera_plugin
-    image_sonar_ros_plugin
+    uuv_gazebo_ros_image_sonar_plugin
   CATKIN_DEPENDS
     gazebo_dev
     uuv_gazebo_plugins
@@ -217,10 +217,10 @@ list(APPEND UUV_SENSOR_ROS_PLUGINS_LIST uuv_gazebo_ros_camera_plugin)
 
 ###############################################################################
 
-add_library(image_sonar_ros_plugin src/gazebo_ros_image_sonar.cpp)
-target_link_libraries(image_sonar_ros_plugin ${OGRE_LIBRARIES} ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
-add_dependencies(image_sonar_ros_plugin ${catkin_EXPORTED_TARGETS})
-list(APPEND UUV_SENSOR_ROS_PLUGINS_LIST image_sonar_ros_plugin)
+add_library(uuv_gazebo_ros_image_sonar_plugin src/ImagingSonarROSPlugin.cc)
+target_link_libraries(uuv_gazebo_ros_image_sonar_plugin ${OGRE_LIBRARIES} ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
+add_dependencies(uuv_gazebo_ros_image_sonar_plugin ${catkin_EXPORTED_TARGETS})
+list(APPEND UUV_SENSOR_ROS_PLUGINS_LIST uuv_gazebo_ros_image_sonar_plugin)
 
 
 #############

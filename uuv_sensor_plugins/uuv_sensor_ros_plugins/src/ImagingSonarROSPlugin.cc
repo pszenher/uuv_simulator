@@ -31,7 +31,7 @@
  *
  */
 
-#include <uuv_sensor_ros_plugins/gazebo_ros_image_sonar.hh>
+#include <uuv_sensor_ros_plugins/ImagingSonarROSPlugin.hh>
 
 namespace gazebo
 {
