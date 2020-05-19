@@ -204,7 +204,7 @@
             <near>0.1</near>
             <far>17</far>
           </clip>
-          <save enabled="true">
+          <save enabled="false">
             <path>/tmp/camera</path>
           </save>
         </camera>
