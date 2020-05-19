@@ -111,28 +111,10 @@ void GazeboRosImageSonar::Load(sensors::SensorPtr _parent, sdf::ElementPtr _sdf)
   this->format_ = this->format;
   this->camera_ = this->depthCamera;
 
-  // using a different default
-  if (!_sdf->HasElement("imageTopicName"))
-    this->image_topic_name_ = "ir/image_raw";
-  if (!_sdf->HasElement("cameraInfoTopicName"))
-    this->camera_info_topic_name_ = "ir/camera_info";
-
-  // point cloud stuff
-  if (!_sdf->HasElement("pointCloudTopicName"))
-    this->point_cloud_topic_name_ = "points";
+  if (!_sdf->HasElement("sonarGroupTopicName"))
+    this->sonar_group_topic_name_ = "imaging_sonar";
   else
-    this->point_cloud_topic_name_ = _sdf->GetElement("pointCloudTopicName")->Get<std::string>();
-
-  // depth image stuff
-  if (!_sdf->HasElement("depthImageTopicName"))
-    this->depth_image_topic_name_ = "depth/image_raw";
-  else
-    this->depth_image_topic_name_ = _sdf->GetElement("depthImageTopicName")->Get<std::string>();
-
-  if (!_sdf->HasElement("depthImageCameraInfoTopicName"))
-    this->depth_image_camera_info_topic_name_ = "depth/camera_info";
-  else
-    this->depth_image_camera_info_topic_name_ = _sdf->GetElement("depthImageCameraInfoTopicName")->Get<std::string>();
+    this->sonar_group_topic_name_ = _sdf->GetElement("sonarGroupTopicName")->Get<std::string>();
 
   if (!_sdf->HasElement("pointCloudCutoff"))
     this->point_cloud_cutoff_ = 0.4;
@@ -155,7 +137,7 @@ void GazeboRosImageSonar::Advertise()
 {
   ros::AdvertiseOptions point_cloud_ao =
     ros::AdvertiseOptions::create<sensor_msgs::PointCloud2 >(
-      this->point_cloud_topic_name_,1,
+      this->sonar_group_topic_name_+"/points",1,
       boost::bind( &GazeboRosImageSonar::PointCloudConnect,this),
       boost::bind( &GazeboRosImageSonar::PointCloudDisconnect,this),
       ros::VoidPtr(), &this->camera_queue_);
@@ -163,7 +145,7 @@ void GazeboRosImageSonar::Advertise()
 
   ros::AdvertiseOptions depth_image_ao =
     ros::AdvertiseOptions::create< sensor_msgs::Image >(
-      this->depth_image_topic_name_,1,
+      this->sonar_group_topic_name_+"/depth",1,
       boost::bind( &GazeboRosImageSonar::DepthImageConnect,this),
       boost::bind( &GazeboRosImageSonar::DepthImageDisconnect,this),
       ros::VoidPtr(), &this->camera_queue_);
@@ -171,7 +153,7 @@ void GazeboRosImageSonar::Advertise()
 
   ros::AdvertiseOptions normal_image_ao =
     ros::AdvertiseOptions::create< sensor_msgs::Image >(
-      this->depth_image_topic_name_+"_normals",1,
+      this->sonar_group_topic_name_+"/depth_normals",1,
       boost::bind( &GazeboRosImageSonar::NormalImageConnect,this),
       boost::bind( &GazeboRosImageSonar::NormalImageDisconnect,this),
       ros::VoidPtr(), &this->camera_queue_);
@@ -179,7 +161,7 @@ void GazeboRosImageSonar::Advertise()
 
   ros::AdvertiseOptions multibeam_image_ao =
     ros::AdvertiseOptions::create< sensor_msgs::Image >(
-      this->depth_image_topic_name_+"_multibeam",1,
+      this->sonar_group_topic_name_+"/depth_multibeam",1,
       boost::bind( &GazeboRosImageSonar::MultibeamImageConnect,this),
       boost::bind( &GazeboRosImageSonar::MultibeamImageDisconnect,this),
       ros::VoidPtr(), &this->camera_queue_);
@@ -187,7 +169,7 @@ void GazeboRosImageSonar::Advertise()
 
   ros::AdvertiseOptions sonar_image_ao =
     ros::AdvertiseOptions::create< sensor_msgs::Image >(
-      this->depth_image_topic_name_+"_sonar",1,
+      this->sonar_group_topic_name_+"/sonar",1,
       boost::bind( &GazeboRosImageSonar::SonarImageConnect,this),
       boost::bind( &GazeboRosImageSonar::SonarImageDisconnect,this),
       ros::VoidPtr(), &this->camera_queue_);
@@ -195,7 +177,7 @@ void GazeboRosImageSonar::Advertise()
 
   ros::AdvertiseOptions raw_sonar_image_ao =
     ros::AdvertiseOptions::create< sensor_msgs::Image >(
-      this->depth_image_topic_name_+"_raw_sonar",1,
+      this->sonar_group_topic_name_+"/raw_sonar",1,
       boost::bind( &GazeboRosImageSonar::RawSonarImageConnect,this),
       boost::bind( &GazeboRosImageSonar::RawSonarImageDisconnect,this),
       ros::VoidPtr(), &this->camera_queue_);
@@ -203,7 +185,7 @@ void GazeboRosImageSonar::Advertise()
 
   ros::AdvertiseOptions depth_image_camera_info_ao =
     ros::AdvertiseOptions::create<sensor_msgs::CameraInfo>(
-        this->depth_image_camera_info_topic_name_,1,
+        this->sonar_group_topic_name_+"/camera_info",1,
         boost::bind( &GazeboRosImageSonar::DepthInfoConnect,this),
         boost::bind( &GazeboRosImageSonar::DepthInfoDisconnect,this),
         ros::VoidPtr(), &this->camera_queue_);

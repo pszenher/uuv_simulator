@@ -165,7 +165,7 @@
   </xacro:macro>
 
   <xacro:macro name="forward_looking_sonar"
-               params="namespace suffix parent_link topic mass update_rate
+               params="namespace suffix parent_link mass update_rate
                        samples fov width height *inertia *origin">
     <!-- Sensor link -->
     <link name="${namespace}/forward_sonar${suffix}_link">
@@ -209,7 +209,8 @@
           </save>
         </camera>
 	<plugin filename="libuuv_gazebo_ros_image_sonar_plugin.so" name="forward_sonar${suffix}_controller">
-	  <topicName>${topic}</topicName>
+          <sonarGroupTopicName>forward_sonar_${suffix}</sonarGroupTopicName>
+          <imageTopicName>forward_sonar_${suffix}/raw_image</imageTopicName>
           <frameName>forward_sonar${suffix}_optical_frame</frameName>
         </plugin>
         <always_on>true</always_on>

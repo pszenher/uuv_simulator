@@ -145,7 +145,8 @@ namespace gazebo
     private: double point_cloud_cutoff_;
 
     /// \brief ROS image topic name
-    private: std::string point_cloud_topic_name_;
+    private: std::string sonar_group_topic_name_;
+
     std::default_random_engine generator;
 
     private: void InfoConnect();
@@ -155,8 +156,6 @@ namespace gazebo
     protected: virtual void PublishCameraInfo();
 
     /// \brief image where each pixel contains the depth information
-    private: std::string depth_image_topic_name_;
-    private: std::string depth_image_camera_info_topic_name_;
     private: int depth_info_connect_count_;
     private: void DepthInfoConnect();
     private: void DepthInfoDisconnect();
