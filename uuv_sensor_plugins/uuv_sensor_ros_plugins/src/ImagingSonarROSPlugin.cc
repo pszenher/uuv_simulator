@@ -69,7 +69,7 @@ void GazeboRosImageSonar::Load(sensors::SensorPtr _parent, sdf::ElementPtr _sdf)
 
   if (!this->parentSensor)
   {
-    gzerr << "DepthCameraPlugin not attached to a depthCamera sensor\n";
+    gzerr << "ImagingSonarROSPlugin not attached to a depthCamera sensor\n";
     return;
   }
 
